@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="View detailed course information, syllabus, fees, and enroll at MLK Tech.">
+  <title>Course Details | MLK Tech</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
+        MLK Tech
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="bi bi-list fs-4"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+          <li class="nav-item"><a class="nav-link active" href="courses.html">Courses</a></li>
+          <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+          <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+          <li class="nav-item ms-lg-2">
+            <a class="btn btn-primary-custom btn-sm" href="contact.html">Get Started</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1 class="fade-in" id="coursePageTitle">Course Details</h1>
+      <ul class="breadcrumb-custom fade-in delay-1">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="courses.html">Courses</a></li>
+        <li id="breadcrumbCourse">Course Details</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Course Details -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="row g-5">
+
+        <!-- Main Content -->
+        <div class="col-lg-8">
+          <!-- Course Banner -->
+          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80"
+               alt="Course banner" class="course-banner fade-in" id="courseBanner">
+
+          <!-- Course Title & Meta -->
+          <h2 class="mt-4 fade-in" id="courseTitle">Full Stack Web Development</h2>
+
+          <div class="course-meta fade-in delay-1">
+            <div class="course-meta-item">
+              <i class="bi bi-clock"></i>
+              <span id="courseDuration">6 Months</span>
+            </div>
+            <div class="course-meta-item">
+              <i class="bi bi-laptop"></i>
+              <span id="courseMode">Online & Offline</span>
+            </div>
+            <div class="course-meta-item">
+              <i class="bi bi-currency-rupee"></i>
+              <span id="courseFees">₹45,000</span>
+            </div>
+          </div>
+
+          <!-- Overview -->
+          <div class="fade-in delay-2">
+            <h4 class="mb-3">Course Overview</h4>
+            <p class="text-muted" id="courseOverview">
+              Master modern web development with HTML, CSS, JavaScript, React, Node.js, and databases.
+              Build real-world projects and launch your career as a full stack developer.
+            </p>
+          </div>
+
+          <!-- Syllabus -->
+          <div class="mt-5 fade-in delay-3">
+            <h4 class="mb-4">Syllabus & Modules</h4>
+            <div id="syllabusList">
+              <!-- Populated dynamically by JavaScript -->
+            </div>
+          </div>
+
+          <!-- Benefits -->
+          <div class="mt-5 fade-in">
+            <h4 class="mb-4">What You'll Gain</h4>
+            <div id="benefitsList">
+              <!-- Populated dynamically by JavaScript -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar - Enquiry Form -->
+        <div class="col-lg-4">
+          <div class="enquiry-form-card fade-in-right">
+            <h4 class="mb-1">Enquire Now</h4>
+            <p class="text-muted small mb-4">Fill out the form below and we'll get back to you within 24 hours.</p>
+
+            <div class="form-success mb-3" id="enquirySuccess">
+              <i class="bi bi-check-circle-fill me-2"></i>
+              Thank you! Your enquiry has been submitted successfully.
+            </div>
+
+            <form id="enquiryForm" novalidate>
+              <div class="mb-3">
+                <label for="enquiryName" class="form-label-custom">Full Name *</label>
+                <input type="text" class="form-control form-control-custom" id="enquiryName" placeholder="Enter your name">
+              </div>
+              <div class="mb-3">
+                <label for="enquiryEmail" class="form-label-custom">Email Address *</label>
+                <input type="email" class="form-control form-control-custom" id="enquiryEmail" placeholder="your@email.com">
+              </div>
+              <div class="mb-3">
+                <label for="enquiryPhone" class="form-label-custom">Phone Number *</label>
+                <input type="tel" class="form-control form-control-custom" id="enquiryPhone" placeholder="+91 98765 43210">
+              </div>
+              <div class="mb-3">
+                <label for="enquiryCourse" class="form-label-custom">Course Name *</label>
+                <input type="text" class="form-control form-control-custom" id="enquiryCourse" readonly>
+              </div>
+              <div class="mb-3">
+                <label for="enquiryMessage" class="form-label-custom">Message *</label>
+                <textarea class="form-control form-control-custom" id="enquiryMessage" rows="4" placeholder="Tell us about your goals or any questions..."></textarea>
+              </div>
+              <button type="submit" class="btn btn-primary-custom w-100">
+                <i class="bi bi-send me-2"></i>Submit Enquiry
+              </button>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6">
+          <div class="footer-brand">
+            <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
+            MLK Tech
+          </div>
+          <p>Empowering businesses and professionals with innovative technology solutions and world-class training programs.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6">
+          <h6>Quick Links</h6>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="courses.html">Courses</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h6>Our Services</h6>
+          <ul class="footer-links">
+            <li><a href="services.html">Web Development</a></li>
+            <li><a href="services.html">Mobile Apps</a></li>
+            <li><a href="services.html">AI & ML Solutions</a></li>
+            <li><a href="services.html">Cloud Solutions</a></li>
+            <li><a href="services.html">IT Consulting</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h6>Contact Info</h6>
+          <ul class="footer-links">
+            <li><i class="bi bi-geo-alt me-2"></i>123 Tech Park, Chennai, India</li>
+            <li><i class="bi bi-telephone me-2"></i>+91 98765 43210</li>
+            <li><i class="bi bi-envelope me-2"></i>info@mlktech.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MLK Tech. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="Back to top"><i class="bi bi-arrow-up"></i></button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

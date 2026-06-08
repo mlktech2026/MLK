@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact MLK Tech - Get in touch for technology solutions, course enquiries, and business partnerships.">
+  <meta name="keywords" content="contact MLK Tech, IT company Chennai, course enquiry, tech support">
+  <title>Contact Us | MLK Tech</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
+        MLK Tech
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav" aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="bi bi-list fs-4"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="mainNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+          <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link" href="about.html">About</a></li>
+          <li class="nav-item"><a class="nav-link" href="services.html">Services</a></li>
+          <li class="nav-item"><a class="nav-link" href="courses.html">Courses</a></li>
+          <li class="nav-item"><a class="nav-link" href="blog.html">Blog</a></li>
+          <li class="nav-item"><a class="nav-link active" href="contact.html">Contact</a></li>
+          <li class="nav-item ms-lg-2">
+            <a class="btn btn-primary-custom btn-sm" href="contact.html">Get Started</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <h1 class="fade-in">Contact <span class="text-gradient">Us</span></h1>
+      <ul class="breadcrumb-custom fade-in delay-1">
+        <li><a href="index.html">Home</a></li>
+        <li>Contact</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="section-padding">
+    <div class="container">
+      <div class="row g-5">
+
+        <!-- Contact Info -->
+        <div class="col-lg-5 fade-in-left">
+          <div class="contact-info-card">
+            <h4 class="mb-4">Get in Touch</h4>
+            <p class="text-muted mb-4">Have a question or want to work together? We'd love to hear from you. Reach out through any of the channels below.</p>
+
+            <div class="contact-info-item">
+              <div class="info-icon"><i class="bi bi-geo-alt-fill"></i></div>
+              <div>
+                <h6>Our Address</h6>
+                <p>123 Tech Park, Tidel Park Avenue,<br>Tharamani, Chennai - 600113,<br>Tamil Nadu, India</p>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="info-icon"><i class="bi bi-telephone-fill"></i></div>
+              <div>
+                <h6>Phone Number</h6>
+                <p><a href="tel:+919876543210">+91 98765 43210</a></p>
+                <p><a href="tel:+914412345678">+91 44 1234 5678</a></p>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="info-icon"><i class="bi bi-envelope-fill"></i></div>
+              <div>
+                <h6>Email Address</h6>
+                <p><a href="mailto:info@mlktech.com">info@mlktech.com</a></p>
+                <p><a href="mailto:support@mlktech.com">support@mlktech.com</a></p>
+              </div>
+            </div>
+
+            <div class="contact-info-item">
+              <div class="info-icon"><i class="bi bi-clock-fill"></i></div>
+              <div>
+                <h6>Working Hours</h6>
+                <p>Monday - Saturday: 9:00 AM - 7:00 PM<br>Sunday: Closed</p>
+              </div>
+            </div>
+
+            <div class="social-links">
+              <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+              <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+              <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+              <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+              <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Form -->
+        <div class="col-lg-7 fade-in-right">
+          <div class="card-custom" style="padding: 36px;">
+            <h4 class="mb-1">Send Us a Message</h4>
+            <p class="text-muted small mb-4">Fill out the form below and we'll respond within 24 hours.</p>
+
+            <div class="form-success mb-3" id="contactSuccess">
+              <i class="bi bi-check-circle-fill me-2"></i>
+              Thank you! Your message has been sent successfully. We'll get back to you soon.
+            </div>
+
+            <form id="contactForm" novalidate>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="contactName" class="form-label-custom">Full Name *</label>
+                  <input type="text" class="form-control form-control-custom" id="contactName" placeholder="Enter your name">
+                </div>
+                <div class="col-md-6">
+                  <label for="contactEmail" class="form-label-custom">Email Address *</label>
+                  <input type="email" class="form-control form-control-custom" id="contactEmail" placeholder="your@email.com">
+                </div>
+                <div class="col-md-6">
+                  <label for="contactPhone" class="form-label-custom">Phone Number *</label>
+                  <input type="tel" class="form-control form-control-custom" id="contactPhone" placeholder="+91 98765 43210">
+                </div>
+                <div class="col-md-6">
+                  <label for="contactSubject" class="form-label-custom">Subject *</label>
+                  <input type="text" class="form-control form-control-custom" id="contactSubject" placeholder="How can we help?">
+                </div>
+                <div class="col-12">
+                  <label for="contactMessage" class="form-label-custom">Message *</label>
+                  <textarea class="form-control form-control-custom" id="contactMessage" rows="5" placeholder="Write your message here..."></textarea>
+                </div>
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary-custom">
+                    <i class="bi bi-send me-2"></i>Send Message
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Google Map -->
+  <section class="section-padding pt-0">
+    <div class="container fade-in">
+      <h4 class="mb-4 text-center">Find Us on the Map</h4>
+      <div class="map-container">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.0136748699997!2d80.2481!3d12.9858!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525d2070d399e1%3A0x96725a62ca0f331d!2sTidel%20Park%2C%20Chennai!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="MLK Tech office location on Google Maps">
+        </iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-lg-4 col-md-6">
+          <div class="footer-brand">
+            <span class="brand-icon"><i class="bi bi-lightning-charge-fill"></i></span>
+            MLK Tech
+          </div>
+          <p>Empowering businesses and professionals with innovative technology solutions and world-class training programs.</p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-6">
+          <h6>Quick Links</h6>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="courses.html">Courses</a></li>
+            <li><a href="blog.html">Blog</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h6>Our Services</h6>
+          <ul class="footer-links">
+            <li><a href="services.html">Web Development</a></li>
+            <li><a href="services.html">Mobile Apps</a></li>
+            <li><a href="services.html">AI & ML Solutions</a></li>
+            <li><a href="services.html">Cloud Solutions</a></li>
+            <li><a href="services.html">IT Consulting</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 col-md-6">
+          <h6>Contact Info</h6>
+          <ul class="footer-links">
+            <li><i class="bi bi-geo-alt me-2"></i>123 Tech Park, Chennai, India</li>
+            <li><i class="bi bi-telephone me-2"></i>+91 98765 43210</li>
+            <li><i class="bi bi-envelope me-2"></i>info@mlktech.com</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 MLK Tech. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <button class="back-to-top" aria-label="Back to top"><i class="bi bi-arrow-up"></i></button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,16 +1,17 @@
 {% extends "admin/admin_base.html" %}
 
 {% block title %}Contacts{% endblock %}
+{% block page_heading %}Contact Messages{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-  <h2 class="mb-0">Contact Messages</h2>
-  <span class="badge bg-primary">{{ messages|length }} total</span>
+  <p class="text-muted mb-0">Manage contact form submissions from the website.</p>
+  <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2">{{ pagination.total }} total</span>
 </div>
 
-<div class="admin-table">
+<div class="admin-card">
   <div class="table-responsive">
-    <table class="table table-hover mb-0">
+    <table class="table admin-table mb-0">
       <thead>
         <tr>
           <th>Name</th>
@@ -25,7 +26,7 @@
       <tbody>
         {% for msg in messages %}
         <tr>
-          <td>{{ msg.name }}</td>
+          <td><strong>{{ msg.name }}</strong></td>
           <td><a href="mailto:{{ msg.email }}">{{ msg.email }}</a></td>
           <td>{{ msg.phone }}</td>
           <td>{{ msg.subject }}</td>
@@ -34,6 +35,7 @@
           <td>
             <form method="POST" action="{{ url_for('admin.delete_contact', contact_id=msg.id) }}" onsubmit="return confirm('Delete this message?');">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <input type="hidden" name="page" value="{{ pagination.page }}">
               <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
                 <i class="bi bi-trash"></i>
               </button>
@@ -48,5 +50,6 @@
       </tbody>
     </table>
   </div>
+  {% include 'admin/_pagination.html' %}
 </div>
 {% endblock %}

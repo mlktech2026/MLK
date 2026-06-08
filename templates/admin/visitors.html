@@ -1,0 +1,54 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Visitors{% endblock %}
+{% block page_heading %}Visitor Analytics{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+  <p class="text-muted mb-0">Track all public website visits. Admin panel visits are excluded.</p>
+  <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2">{{ pagination.total }} total records</span>
+</div>
+
+<div class="admin-card">
+  <div class="table-responsive">
+    <table class="table admin-table mb-0">
+      <thead>
+        <tr>
+          <th>IP Address</th>
+          <th>Page URL</th>
+          <th>Type</th>
+          <th>Browser</th>
+          <th>User Agent</th>
+          <th>Visited At</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for v in visitors %}
+        <tr>
+          <td><code>{{ v.ip_address }}</code></td>
+          <td>{{ v.page_url }}</td>
+          <td>
+            <span class="badge {% if v.page_type == 'home' %}bg-primary{% elif v.page_type == 'blog' %}bg-success{% elif v.page_type == 'course' %}bg-info{% else %}bg-secondary{% endif %} bg-opacity-10 text-dark">
+              {{ v.page_type or 'other' }}
+            </span>
+          </td>
+          <td>{{ v.browser_name }}</td>
+          <td class="small text-muted" style="max-width:200px;" title="{{ v.user_agent }}">
+            {{ v.user_agent[:50] }}{% if v.user_agent and v.user_agent|length > 50 %}...{% endif %}
+          </td>
+          <td class="text-muted small">{{ v.visited_at.strftime('%b %d, %Y %H:%M') }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="6" class="text-muted text-center py-5">
+            <i class="bi bi-graph-down fs-2 d-block mb-2"></i>
+            No visitor data yet. Visit the public website to start tracking.
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% include 'admin/_pagination.html' %}
+</div>
+{% endblock %}

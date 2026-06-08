@@ -1,16 +1,17 @@
 {% extends "admin/admin_base.html" %}
 
 {% block title %}Enquiries{% endblock %}
+{% block page_heading %}Course Enquiries{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-  <h2 class="mb-0">Course Enquiries</h2>
-  <span class="badge bg-primary">{{ enquiries|length }} total</span>
+  <p class="text-muted mb-0">Course enquiry submissions from course detail pages.</p>
+  <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2">{{ pagination.total }} total</span>
 </div>
 
-<div class="admin-table">
+<div class="admin-card">
   <div class="table-responsive">
-    <table class="table table-hover mb-0">
+    <table class="table admin-table mb-0">
       <thead>
         <tr>
           <th>Name</th>
@@ -25,15 +26,16 @@
       <tbody>
         {% for enquiry in enquiries %}
         <tr>
-          <td>{{ enquiry.name }}</td>
+          <td><strong>{{ enquiry.name }}</strong></td>
           <td><a href="mailto:{{ enquiry.email }}">{{ enquiry.email }}</a></td>
           <td>{{ enquiry.phone }}</td>
           <td>{{ enquiry.course_name }}</td>
-          <td>{{ enquiry.message[:60] }}{% if enquiry.message|length > 60 %}...{% endif %}</td>
+          <td>{{ enquiry.message[:50] }}{% if enquiry.message|length > 50 %}...{% endif %}</td>
           <td class="text-muted small">{{ enquiry.created_at.strftime('%b %d, %Y %H:%M') }}</td>
           <td>
             <form method="POST" action="{{ url_for('admin.delete_enquiry', enquiry_id=enquiry.id) }}" onsubmit="return confirm('Delete this enquiry?');">
               <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <input type="hidden" name="page" value="{{ pagination.page }}">
               <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
                 <i class="bi bi-trash"></i>
               </button>
@@ -48,5 +50,6 @@
       </tbody>
     </table>
   </div>
+  {% include 'admin/_pagination.html' %}
 </div>
 {% endblock %}

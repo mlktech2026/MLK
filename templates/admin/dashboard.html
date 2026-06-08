@@ -1,88 +1,124 @@
 {% extends "admin/admin_base.html" %}
 
 {% block title %}Dashboard{% endblock %}
+{% block page_heading %}Dashboard{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between align-items-center mb-4">
-  <h2 class="mb-0">Dashboard</h2>
-  <span class="text-muted">Welcome back, {{ current_user.username }}</span>
-</div>
+<p class="text-muted mb-4">Welcome back, <strong>{{ current_user.username }}</strong>! Here's your website overview.</p>
 
+<!-- Stat Cards Row 1 -->
 <div class="row g-4 mb-4">
-  <div class="col-md-6 col-lg-3">
-    <div class="admin-stat-card">
+  <div class="col-6 col-lg-3">
+    <div class="stat-card">
+      <div class="stat-icon purple"><i class="bi bi-people"></i></div>
+      <h3>{{ stats.visitors }}</h3>
+      <p>Total Visitors</p>
+      <div class="stat-sub"><i class="bi bi-calendar-day"></i> {{ stats.today_visitors }} today</div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="stat-card">
+      <div class="stat-icon blue"><i class="bi bi-envelope"></i></div>
       <h3>{{ stats.contacts }}</h3>
-      <p class="text-muted mb-0">Contact Messages</p>
+      <p>Contact Messages</p>
     </div>
   </div>
-  <div class="col-md-6 col-lg-3">
-    <div class="admin-stat-card">
+  <div class="col-6 col-lg-3">
+    <div class="stat-card">
+      <div class="stat-icon green"><i class="bi bi-chat-dots"></i></div>
       <h3>{{ stats.enquiries }}</h3>
-      <p class="text-muted mb-0">Course Enquiries</p>
+      <p>Course Enquiries</p>
     </div>
   </div>
-  <div class="col-md-6 col-lg-3">
-    <div class="admin-stat-card">
-      <h3>{{ stats.blogs }}</h3>
-      <p class="text-muted mb-0">Blog Posts</p>
-    </div>
-  </div>
-  <div class="col-md-6 col-lg-3">
-    <div class="admin-stat-card">
-      <h3>{{ stats.courses }}</h3>
-      <p class="text-muted mb-0">Courses</p>
+  <div class="col-6 col-lg-3">
+    <div class="stat-card">
+      <div class="stat-icon orange"><i class="bi bi-house-door"></i></div>
+      <h3>{{ stats.home_views }}</h3>
+      <p>Home Page Views</p>
     </div>
   </div>
 </div>
 
+<!-- Stat Cards Row 2 -->
+<div class="row g-4 mb-4">
+  <div class="col-6 col-lg-3">
+    <div class="stat-card">
+      <div class="stat-icon indigo"><i class="bi bi-journal-text"></i></div>
+      <h3>{{ stats.blogs }}</h3>
+      <p>Blog Posts</p>
+      <div class="stat-sub"><i class="bi bi-eye"></i> {{ stats.blog_views }} total views</div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="stat-card">
+      <div class="stat-icon teal"><i class="bi bi-mortarboard"></i></div>
+      <h3>{{ stats.courses }}</h3>
+      <p>Courses</p>
+      <div class="stat-sub"><i class="bi bi-eye"></i> {{ stats.course_views }} total views</div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="stat-card">
+      <div class="stat-icon pink"><i class="bi bi-trophy"></i></div>
+      <h3>{% if analytics.most_viewed_blog %}{{ analytics.most_viewed_blog.view_count or 0 }}{% else %}0{% endif %}</h3>
+      <p>Top Blog Views</p>
+      <div class="stat-sub text-truncate" title="{% if analytics.most_viewed_blog %}{{ analytics.most_viewed_blog.title }}{% endif %}">
+        {% if analytics.most_viewed_blog %}{{ analytics.most_viewed_blog.title[:28] }}{% if analytics.most_viewed_blog.title|length > 28 %}...{% endif %}{% else %}No data{% endif %}
+      </div>
+    </div>
+  </div>
+  <div class="col-6 col-lg-3">
+    <div class="stat-card">
+      <div class="stat-icon red"><i class="bi bi-award"></i></div>
+      <h3>{% if analytics.most_viewed_course %}{{ analytics.most_viewed_course.view_count or 0 }}{% else %}0{% endif %}</h3>
+      <p>Top Course Views</p>
+      <div class="stat-sub text-truncate" title="{% if analytics.most_viewed_course %}{{ analytics.most_viewed_course.title }}{% endif %}">
+        {% if analytics.most_viewed_course %}{{ analytics.most_viewed_course.title[:28] }}{% if analytics.most_viewed_course.title|length > 28 %}...{% endif %}{% else %}No data{% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- Latest Activity -->
 <div class="row g-4">
   <div class="col-lg-6">
-    <div class="admin-table">
-      <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Latest Contacts</h5>
-        <a href="{{ url_for('admin.contacts') }}" class="btn btn-sm btn-outline-primary">View All</a>
+    <div class="admin-card">
+      <div class="admin-card-header">
+        <h5><i class="bi bi-envelope me-2 text-primary"></i>Latest Contacts</h5>
+        <a href="{{ url_for('admin.contacts') }}" class="btn btn-sm btn-admin-primary">View All</a>
       </div>
       <div class="table-responsive">
-        <table class="table table-hover mb-0">
+        <table class="table admin-table mb-0">
           <thead>
-            <tr>
-              <th>Name</th>
-              <th>Subject</th>
-              <th>Date</th>
-            </tr>
+            <tr><th>Name</th><th>Subject</th><th>Date</th></tr>
           </thead>
           <tbody>
             {% for msg in latest_contacts %}
             <tr>
               <td>{{ msg.name }}</td>
-              <td>{{ msg.subject[:40] }}{% if msg.subject|length > 40 %}...{% endif %}</td>
+              <td>{{ msg.subject[:35] }}{% if msg.subject|length > 35 %}...{% endif %}</td>
               <td class="text-muted small">{{ msg.created_at.strftime('%b %d, %Y') }}</td>
             </tr>
             {% else %}
-            <tr>
-              <td colspan="3" class="text-muted text-center py-4">No contact messages yet.</td>
-            </tr>
+            <tr><td colspan="3" class="text-muted text-center py-4">No contact messages yet.</td></tr>
             {% endfor %}
           </tbody>
         </table>
       </div>
     </div>
   </div>
-
   <div class="col-lg-6">
-    <div class="admin-table">
-      <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Latest Enquiries</h5>
-        <a href="{{ url_for('admin.enquiries') }}" class="btn btn-sm btn-outline-primary">View All</a>
+    <div class="admin-card">
+      <div class="admin-card-header">
+        <h5><i class="bi bi-chat-dots me-2 text-primary"></i>Latest Enquiries</h5>
+        <a href="{{ url_for('admin.enquiries') }}" class="btn btn-sm btn-admin-primary">View All</a>
       </div>
       <div class="table-responsive">
-        <table class="table table-hover mb-0">
+        <table class="table admin-table mb-0">
           <thead>
-            <tr>
-              <th>Name</th>
-              <th>Course</th>
-              <th>Date</th>
-            </tr>
+            <tr><th>Name</th><th>Course</th><th>Date</th></tr>
           </thead>
           <tbody>
             {% for enquiry in latest_enquiries %}
@@ -92,9 +128,7 @@
               <td class="text-muted small">{{ enquiry.created_at.strftime('%b %d, %Y') }}</td>
             </tr>
             {% else %}
-            <tr>
-              <td colspan="3" class="text-muted text-center py-4">No enquiries yet.</td>
-            </tr>
+            <tr><td colspan="3" class="text-muted text-center py-4">No enquiries yet.</td></tr>
             {% endfor %}
           </tbody>
         </table>
@@ -102,4 +136,102 @@
     </div>
   </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+(function () {
+  var chartDefaults = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: { beginAtZero: true, ticks: { precision: 0 } },
+      x: { grid: { display: false } }
+    }
+  };
+
+  var gradientPurple = function (ctx) {
+    var g = ctx.createLinearGradient(0, 0, 0, 220);
+    g.addColorStop(0, 'rgba(79, 70, 229, 0.8)');
+    g.addColorStop(1, 'rgba(124, 58, 237, 0.2)');
+    return g;
+  };
+
+  // Daily visitors
+  new Chart(document.getElementById('dailyVisitorsChart'), {
+    type: 'bar',
+    data: {
+      labels: {{ chart_data.daily.labels | tojson }},
+      datasets: [{
+        data: {{ chart_data.daily.data | tojson }},
+        backgroundColor: function (ctx) { return gradientPurple(ctx.chart.ctx); },
+        borderRadius: 8,
+        borderSkipped: false
+      }]
+    },
+    options: chartDefaults
+  });
+
+  // Monthly visitors
+  new Chart(document.getElementById('monthlyVisitorsChart'), {
+    type: 'line',
+    data: {
+      labels: {{ chart_data.monthly.labels | tojson }},
+      datasets: [{
+        data: {{ chart_data.monthly.data | tojson }},
+        borderColor: '#4f46e5',
+        backgroundColor: 'rgba(79, 70, 229, 0.1)',
+        fill: true,
+        tension: 0.4,
+        pointBackgroundColor: '#7c3aed',
+        pointRadius: 5
+      }]
+    },
+    options: chartDefaults
+  });
+
+  // Blog views
+  new Chart(document.getElementById('blogViewsChart'), {
+    type: 'doughnut',
+    data: {
+      labels: {{ chart_data.blog_views.labels | tojson }},
+      datasets: [{
+        data: {{ chart_data.blog_views.data | tojson }},
+        backgroundColor: ['#4f46e5', '#7c3aed', '#a78bfa', '#c4b5fd', '#ddd6fe']
+      }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } } } }
+  });
+
+  // Course views
+  new Chart(document.getElementById('courseViewsChart'), {
+    type: 'doughnut',
+    data: {
+      labels: {{ chart_data.course_views.labels | tojson }},
+      datasets: [{
+        data: {{ chart_data.course_views.data | tojson }},
+        backgroundColor: ['#06b6d4', '#0891b2', '#0e7490', '#155e75', '#164e63']
+      }]
+    },
+    options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 10 } } } } }
+  });
+
+  // Top pages
+  var topPages = {{ chart_data.top_pages | tojson }};
+  new Chart(document.getElementById('topPagesChart'), {
+    type: 'bar',
+    data: {
+      labels: topPages.map(function (p) { return p.url.length > 20 ? p.url.substring(0, 20) + '…' : p.url; }),
+      datasets: [{
+        data: topPages.map(function (p) { return p.views; }),
+        backgroundColor: '#7c3aed',
+        borderRadius: 6
+      }]
+    },
+    options: { ...chartDefaults, indexAxis: 'y' }
+  });
+})();
+</script>
 {% endblock %}

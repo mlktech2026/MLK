@@ -56,6 +56,7 @@ class Blog(db.Model):
     meta_description = db.Column(db.String(300), nullable=True)
     meta_keywords = db.Column(db.String(300), nullable=True)
     is_published = db.Column(db.Boolean, default=True)
+    view_count = db.Column(db.Integer, default=0, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -89,6 +90,7 @@ class Course(db.Model):
     modules_json = db.Column(db.Text, nullable=True)
     benefits_json = db.Column(db.Text, nullable=True)
     is_published = db.Column(db.Boolean, default=True)
+    view_count = db.Column(db.Integer, default=0, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -136,3 +138,32 @@ class CourseEnquiry(db.Model):
     course_id = db.Column(db.Integer, db.ForeignKey('courses.id'), nullable=True)
     message = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+
+class Visitor(db.Model):
+    """Website visitor analytics log."""
+
+    __tablename__ = 'visitors'
+
+    id = db.Column(db.Integer, primary_key=True)
+    ip_address = db.Column(db.String(45), nullable=False, index=True)
+    page_url = db.Column(db.String(500), nullable=False)
+    user_agent = db.Column(db.String(500), nullable=True)
+    page_type = db.Column(db.String(20), nullable=True, index=True)
+    visited_at = db.Column(db.DateTime, default=datetime.utcnow, index=True)
+
+    @property
+    def browser_name(self):
+        """Extract a simple browser name from user agent string."""
+        ua = (self.user_agent or '').lower()
+        if 'edg' in ua:
+            return 'Edge'
+        if 'chrome' in ua:
+            return 'Chrome'
+        if 'firefox' in ua:
+            return 'Firefox'
+        if 'safari' in ua:
+            return 'Safari'
+        if 'opera' in ua or 'opr' in ua:
+            return 'Opera'
+        return 'Other'

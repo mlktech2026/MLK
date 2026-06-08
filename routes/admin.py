@@ -1,14 +1,23 @@
 """
 Admin panel routes - login, dashboard, CRUD for blogs/courses,
-contact and enquiry management.
+contact and enquiry management, visitor analytics.
 """
 from flask import (
     Blueprint, current_app, flash, jsonify, redirect,
     render_template, request, url_for,
 )
 from flask_login import current_user, login_required, login_user, logout_user
+
+from analytics import (
+    get_blog_views_chart,
+    get_course_views_chart,
+    get_daily_visitors,
+    get_dashboard_stats,
+    get_monthly_visitors,
+    get_most_viewed_pages,
+)
 from extensions import csrf, db
-from models import Admin, Blog, Contact, Course, CourseEnquiry
+from models import Admin, Blog, Contact, Course, CourseEnquiry, Visitor
 from utils import delete_upload, generate_slug, save_upload, unique_slug
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
@@ -17,6 +26,11 @@ BLOG_CATEGORIES = [
     'AI & ML', 'Web Development', 'Cloud', 'Career',
     'Design', 'Security', 'Marketing', 'Technology'
 ]
+
+
+def _per_page():
+    """Admin table rows per page from config."""
+    return current_app.config.get('ADMIN_PER_PAGE', 10)
 
 
 @admin_bp.route('/login', methods=['GET', 'POST'])
@@ -52,22 +66,54 @@ def logout():
 @admin_bp.route('/dashboard')
 @login_required
 def dashboard():
-    """Dashboard with counts and latest messages."""
+    """Dashboard with stats, charts data, and latest activity."""
+    analytics = get_dashboard_stats()
+
     stats = {
         'contacts': Contact.query.count(),
         'blogs': Blog.query.count(),
         'courses': Course.query.count(),
         'enquiries': CourseEnquiry.query.count(),
+        'visitors': analytics['total_visitors'],
+        'today_visitors': analytics['today_visitors'],
+        'home_views': analytics['home_views'],
+        'blog_views': analytics['total_blog_views'],
+        'course_views': analytics['total_course_views'],
     }
+
     latest_contacts = Contact.query.order_by(Contact.created_at.desc()).limit(5).all()
     latest_enquiries = CourseEnquiry.query.order_by(CourseEnquiry.created_at.desc()).limit(5).all()
+
+    chart_data = {
+        'daily': get_daily_visitors(7),
+        'monthly': get_monthly_visitors(6),
+        'top_pages': get_most_viewed_pages(5),
+        'blog_views': get_blog_views_chart(5),
+        'course_views': get_course_views_chart(5),
+    }
 
     return render_template(
         'admin/dashboard.html',
         stats=stats,
+        analytics=analytics,
+        chart_data=chart_data,
         latest_contacts=latest_contacts,
         latest_enquiries=latest_enquiries,
     )
+
+
+# --------------------------------------------------------------------------
+# Visitors Analytics
+# --------------------------------------------------------------------------
+@admin_bp.route('/visitors')
+@login_required
+def visitors():
+    """Paginated visitor analytics table."""
+    page = request.args.get('page', 1, type=int)
+    pagination = Visitor.query.order_by(Visitor.visited_at.desc()).paginate(
+        page=page, per_page=_per_page(), error_out=False
+    )
+    return render_template('admin/visitors.html', pagination=pagination, visitors=pagination.items)
 
 
 # --------------------------------------------------------------------------
@@ -76,8 +122,11 @@ def dashboard():
 @admin_bp.route('/contacts')
 @login_required
 def contacts():
-    messages = Contact.query.order_by(Contact.created_at.desc()).all()
-    return render_template('admin/contacts.html', messages=messages)
+    page = request.args.get('page', 1, type=int)
+    pagination = Contact.query.order_by(Contact.created_at.desc()).paginate(
+        page=page, per_page=_per_page(), error_out=False
+    )
+    return render_template('admin/contacts.html', pagination=pagination, messages=pagination.items)
 
 
 @admin_bp.route('/contacts/delete/<int:contact_id>', methods=['POST'])
@@ -87,7 +136,8 @@ def delete_contact(contact_id):
     db.session.delete(contact)
     db.session.commit()
     flash('Contact message deleted.', 'success')
-    return redirect(url_for('admin.contacts'))
+    page = request.form.get('page', 1, type=int)
+    return redirect(url_for('admin.contacts', page=page))
 
 
 # --------------------------------------------------------------------------
@@ -96,8 +146,11 @@ def delete_contact(contact_id):
 @admin_bp.route('/enquiries')
 @login_required
 def enquiries():
-    items = CourseEnquiry.query.order_by(CourseEnquiry.created_at.desc()).all()
-    return render_template('admin/enquiries.html', enquiries=items)
+    page = request.args.get('page', 1, type=int)
+    pagination = CourseEnquiry.query.order_by(CourseEnquiry.created_at.desc()).paginate(
+        page=page, per_page=_per_page(), error_out=False
+    )
+    return render_template('admin/enquiries.html', pagination=pagination, enquiries=pagination.items)
 
 
 @admin_bp.route('/enquiries/delete/<int:enquiry_id>', methods=['POST'])
@@ -107,7 +160,8 @@ def delete_enquiry(enquiry_id):
     db.session.delete(enquiry)
     db.session.commit()
     flash('Enquiry deleted.', 'success')
-    return redirect(url_for('admin.enquiries'))
+    page = request.form.get('page', 1, type=int)
+    return redirect(url_for('admin.enquiries', page=page))
 
 
 # --------------------------------------------------------------------------
@@ -116,12 +170,20 @@ def delete_enquiry(enquiry_id):
 @admin_bp.route('/blogs')
 @login_required
 def blogs():
+    page = request.args.get('page', 1, type=int)
     search = request.args.get('search', '').strip()
     query = Blog.query
     if search:
         query = query.filter(Blog.title.ilike(f'%{search}%'))
-    all_blogs = query.order_by(Blog.created_at.desc()).all()
-    return render_template('admin/blogs.html', blogs=all_blogs, search=search)
+    pagination = query.order_by(Blog.created_at.desc()).paginate(
+        page=page, per_page=_per_page(), error_out=False
+    )
+    return render_template(
+        'admin/blogs.html',
+        pagination=pagination,
+        blogs=pagination.items,
+        search=search,
+    )
 
 
 @admin_bp.route('/blogs/add', methods=['GET', 'POST'])
@@ -208,12 +270,20 @@ def _save_blog(blog=None):
 @admin_bp.route('/courses')
 @login_required
 def courses():
+    page = request.args.get('page', 1, type=int)
     search = request.args.get('search', '').strip()
     query = Course.query
     if search:
         query = query.filter(Course.title.ilike(f'%{search}%'))
-    all_courses = query.order_by(Course.created_at.desc()).all()
-    return render_template('admin/courses.html', courses=all_courses, search=search)
+    pagination = query.order_by(Course.created_at.desc()).paginate(
+        page=page, per_page=_per_page(), error_out=False
+    )
+    return render_template(
+        'admin/courses.html',
+        pagination=pagination,
+        courses=pagination.items,
+        search=search,
+    )
 
 
 @admin_bp.route('/courses/add', methods=['GET', 'POST'])

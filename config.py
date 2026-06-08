@@ -40,3 +40,7 @@ class Config:
     # Pagination
     BLOGS_PER_PAGE = 6
     COURSES_PER_PAGE = 6
+    ADMIN_PER_PAGE = 10
+
+    # Visitor tracking: skip duplicate IP+page within this many minutes
+    VISITOR_DEDUP_MINUTES = 30

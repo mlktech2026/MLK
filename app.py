@@ -40,6 +40,10 @@ def create_app(config_class=Config):
     app.register_blueprint(main_bp)
     app.register_blueprint(admin_bp)
 
+    # Track public website visitors (excludes /admin routes)
+    from tracking import track_visitor
+    track_visitor(app)
+
     # CLI command to create database tables and default admin
     @app.cli.command('init-db')
     def init_db():
@@ -56,6 +60,45 @@ def create_app(config_class=Config):
         with app.app_context():
             seed_sample_data()
         print('Sample data seeded successfully.')
+
+    @app.cli.command('upgrade-db')
+    def upgrade_db():
+        """
+        Add new tables/columns for visitor tracking and view counts.
+        Safe to run on existing databases — does not delete data.
+        """
+        from sqlalchemy import inspect, text
+
+        with app.app_context():
+            db.create_all()  # Creates visitors table if missing
+
+            inspector = inspect(db.engine)
+            columns_to_add = []
+
+            if 'blogs' in inspector.get_table_names():
+                blog_cols = [c['name'] for c in inspector.get_columns('blogs')]
+                if 'view_count' not in blog_cols:
+                    columns_to_add.append(
+                        ("blogs", "ALTER TABLE blogs ADD COLUMN view_count INTEGER DEFAULT 0")
+                    )
+
+            if 'courses' in inspector.get_table_names():
+                course_cols = [c['name'] for c in inspector.get_columns('courses')]
+                if 'view_count' not in course_cols:
+                    columns_to_add.append(
+                        ("courses", "ALTER TABLE courses ADD COLUMN view_count INTEGER DEFAULT 0")
+                    )
+
+            for table, sql in columns_to_add:
+                try:
+                    db.session.execute(text(sql))
+                    db.session.commit()
+                    print(f'Added view_count to {table}')
+                except Exception as e:
+                    db.session.rollback()
+                    print(f'{table}: {e}')
+
+            print('Database upgrade completed.')
 
     # Ensure upload folders exist
     with app.app_context():

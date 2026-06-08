@@ -70,8 +70,14 @@ ADMIN_PASSWORD=admin123
 
 ## Step 3: Initialize Database
 
+**New installation:**
 ```bash
 flask --app app init-db
+```
+
+**Existing database (add visitor tracking & view counts):**
+```bash
+flask --app app upgrade-db
 ```
 
 Optional sample data:
@@ -100,7 +106,8 @@ Default admin credentials (change after first login):
 
 | Module | Features |
 |--------|----------|
-| **Dashboard** | Total contacts, blogs, courses, enquiries + latest entries |
+| **Dashboard** | Stats cards, Chart.js analytics, visitor tracking, latest messages |
+| **Visitors** | Paginated visitor log (IP, page, browser, date/time) |
 | **Contacts** | View & delete contact form submissions |
 | **Enquiries** | View & delete course enquiry submissions |
 | **Blogs** | CRUD, image upload, CKEditor, SEO fields, slug URLs |

@@ -1,0 +1,7 @@
+venv/
+.env
+__pycache__/
+*.pyc
+mlktech.db
+instance/
+.pytest_cache/

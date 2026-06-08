@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}Blog | MLK Tech{% endblock %}
+
+{% block meta %}
+<meta name="description" content="MLK Tech Blog - Insights on AI, web development, cloud computing, cybersecurity, career tips, and technology trends.">
+<meta name="keywords" content="MLK Tech blog, tech articles, AI trends, web development, career tips, digital marketing">
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <h1 class="fade-in">Our <span class="text-gradient">Blog</span></h1>
+    <ul class="breadcrumb-custom fade-in delay-1">
+      <li><a href="{{ url_for('main.index') }}">Home</a></li>
+      <li>Blog</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Blog Listing -->
+<section class="section-padding">
+  <div class="container">
+
+    <!-- Search & Filter Bar -->
+    <form method="GET" action="{{ url_for('main.blog_list') }}" class="filter-bar fade-in">
+      <div class="row g-3 align-items-end">
+        <div class="col-md-6">
+          <label for="blogSearch" class="form-label-custom">Search Articles</label>
+          <div class="input-group">
+            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+            <input type="text" class="form-control border-start-0" id="blogSearch" name="search" value="{{ search }}" placeholder="Search by title, author, or keyword...">
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label for="blogCategory" class="form-label-custom">Category</label>
+          <select class="form-select" id="blogCategory" name="category">
+            <option value="all" {% if category == 'all' %}selected{% endif %}>All Categories</option>
+            {% for cat in blog_categories %}
+            <option value="{{ cat }}" {% if category == cat %}selected{% endif %}>{{ cat }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-2">
+          <button type="submit" class="btn btn-primary-custom w-100">Filter</button>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-12">
+          <span class="badge bg-primary bg-opacity-10 text-primary p-2 w-100 text-center" id="blogCount">
+            {{ pagination.total }} {{ 'Article' if pagination.total == 1 else 'Articles' }}
+          </span>
+        </div>
+      </div>
+    </form>
+
+    <!-- Blog Grid -->
+    {% if blogs %}
+    <div class="row g-4 mt-2" id="blogGrid">
+      {% for blog in blogs %}
+      <div class="col-md-6 col-lg-4 fade-in delay-{{ (loop.index0 % 3) + 1 }}">
+        <article class="blog-card">
+          <div class="blog-img-wrap">
+            <img src="{{ blog.image_url }}" alt="{{ blog.title }}" class="blog-img">
+          </div>
+          <div class="card-body">
+            <div class="blog-card-meta">
+              <span class="blog-category">{{ blog.category }}</span>
+              <span class="blog-date"><i class="bi bi-calendar3"></i> {{ blog.formatted_date }}</span>
+            </div>
+            <h5>{{ blog.title }}</h5>
+            <p>{{ blog.excerpt }}</p>
+            <div class="blog-author"><i class="bi bi-person-circle"></i> {{ blog.author }}</div>
+          </div>
+          <div class="card-footer-custom">
+            <a href="{{ url_for('main.blog_view', slug=blog.slug) }}" class="btn btn-outline-custom btn-sm w-100">Read More <i class="bi bi-arrow-right ms-1"></i></a>
+          </div>
+        </article>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="col-12 mt-4">
+      <div class="no-results">
+        <i class="bi bi-journal-x"></i>
+        <h5>No articles found</h5>
+        <p>Try adjusting your search or filter criteria.</p>
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Pagination -->
+    {% if pagination.pages > 1 %}
+    <nav aria-label="Blog pagination">
+      <div class="blog-pagination" id="blogPagination">
+        {% if pagination.has_prev %}
+        <a href="{{ url_for('main.blog_list', page=pagination.prev_num, search=search, category=category) }}" class="page-btn nav-btn"><i class="bi bi-chevron-left"></i> Prev</a>
+        {% else %}
+        <span class="page-btn nav-btn disabled"><i class="bi bi-chevron-left"></i> Prev</span>
+        {% endif %}
+
+        {% for p in pagination.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+          {% if p %}
+            <a href="{{ url_for('main.blog_list', page=p, search=search, category=category) }}" class="page-btn {% if p == pagination.page %}active{% endif %}">{{ p }}</a>
+          {% else %}
+            <span class="page-btn disabled">...</span>
+          {% endif %}
+        {% endfor %}
+
+        {% if pagination.has_next %}
+        <a href="{{ url_for('main.blog_list', page=pagination.next_num, search=search, category=category) }}" class="page-btn nav-btn">Next <i class="bi bi-chevron-right"></i></a>
+        {% else %}
+        <span class="page-btn nav-btn disabled">Next <i class="bi bi-chevron-right"></i></span>
+        {% endif %}
+      </div>
+    </nav>
+    {% endif %}
+
+  </div>
+</section>
+
+<!-- Newsletter CTA -->
+<section class="section-padding bg-light-custom">
+  <div class="container">
+    <div class="cta-section fade-in">
+      <h2 class="mb-3">Stay Updated with Tech Insights</h2>
+      <p class="mb-4">Explore our courses and services to turn knowledge into real-world skills.</p>
+      <div class="d-flex flex-wrap justify-content-center gap-3">
+        <a href="{{ url_for('main.courses') }}" class="btn btn-cta-white">Explore Courses</a>
+        <a href="{{ url_for('main.contact') }}" class="btn btn-cta-outline">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

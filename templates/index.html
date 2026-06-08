@@ -1,0 +1,267 @@
+{% extends "base.html" %}
+
+{% block title %}MLK Tech | Innovative Technology Solutions & Training{% endblock %}
+
+{% block meta %}
+<meta name="description" content="MLK Tech - Leading technology company offering web development, mobile apps, AI/ML solutions, and professional IT training courses.">
+<meta name="keywords" content="MLK Tech, web development, mobile apps, AI, machine learning, IT courses, digital marketing">
+<meta name="author" content="MLK Tech">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section" id="home">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 hero-content">
+        <div class="hero-badge fade-in">
+          <i class="bi bi-stars"></i> Welcome to the Future of Tech
+        </div>
+        <h1 class="hero-title fade-in delay-1">
+          Empowering Businesses with <span class="text-gradient">Smart Technology</span>
+        </h1>
+        <p class="hero-description fade-in delay-2">
+          MLK Tech delivers cutting-edge software solutions and industry-leading training programs to help businesses grow and professionals excel in the digital era.
+        </p>
+        <div class="d-flex flex-wrap gap-3 fade-in delay-3">
+          <a href="{{ url_for('main.services') }}" class="btn btn-primary-custom">Explore Services</a>
+          <a href="{{ url_for('main.courses') }}" class="btn btn-outline-custom">View Courses</a>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="hero-image-wrapper fade-in-right delay-2">
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&q=80" alt="MLK Tech team collaborating on technology projects" class="img-fluid">
+          <div class="hero-float-card card-1">
+            <i class="bi bi-check-circle-fill text-success fs-5"></i>
+            <div>
+              <strong>500+</strong>
+              <small class="d-block text-muted">Projects Delivered</small>
+            </div>
+          </div>
+          <div class="hero-float-card card-2">
+            <i class="bi bi-mortarboard-fill text-primary fs-5"></i>
+            <div>
+              <strong>2000+</strong>
+              <small class="d-block text-muted">Students Trained</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services Overview -->
+<section class="section-padding" id="services">
+  <div class="container">
+    <div class="section-header fade-in">
+      <span class="section-badge">Our Services</span>
+      <h2 class="section-title">Solutions That Drive <span class="text-gradient">Growth</span></h2>
+      <p class="section-subtitle">We offer end-to-end technology services tailored to your business needs.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4 fade-in delay-1">
+        <div class="card-custom">
+          <div class="card-icon"><i class="bi bi-code-slash"></i></div>
+          <h5>Web Development</h5>
+          <p>Custom websites and web applications built with modern frameworks for performance and scalability.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 fade-in delay-2">
+        <div class="card-custom">
+          <div class="card-icon"><i class="bi bi-phone"></i></div>
+          <h5>Mobile App Development</h5>
+          <p>Native and cross-platform mobile apps that deliver seamless user experiences on iOS and Android.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 fade-in delay-3">
+        <div class="card-custom">
+          <div class="card-icon"><i class="bi bi-robot"></i></div>
+          <h5>AI & ML Solutions</h5>
+          <p>Intelligent automation, predictive analytics, and machine learning models to transform your business.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 fade-in delay-1">
+        <div class="card-custom">
+          <div class="card-icon"><i class="bi bi-megaphone"></i></div>
+          <h5>Digital Marketing</h5>
+          <p>Data-driven marketing strategies including SEO, social media, and paid campaigns for maximum ROI.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 fade-in delay-2">
+        <div class="card-custom">
+          <div class="card-icon"><i class="bi bi-cloud"></i></div>
+          <h5>Cloud Solutions</h5>
+          <p>Scalable cloud infrastructure on AWS and Azure with DevOps integration and security best practices.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 fade-in delay-3">
+        <div class="card-custom">
+          <div class="card-icon"><i class="bi bi-headset"></i></div>
+          <h5>IT Consulting</h5>
+          <p>Strategic technology consulting to optimize operations, reduce costs, and accelerate digital transformation.</p>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-5 fade-in">
+      <a href="{{ url_for('main.services') }}" class="btn btn-outline-custom">View All Services <i class="bi bi-arrow-right ms-1"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- Courses Overview -->
+<section class="section-padding bg-light-custom" id="courses">
+  <div class="container">
+    <div class="section-header fade-in">
+      <span class="section-badge">Our Courses</span>
+      <h2 class="section-title">Learn Skills for the <span class="text-gradient">Future</span></h2>
+      <p class="section-subtitle">Industry-aligned training programs designed to launch your tech career.</p>
+    </div>
+    {% if featured_courses %}
+    <div class="row g-4">
+      {% for course in featured_courses %}
+      <div class="col-md-6 col-lg-3 fade-in delay-{{ loop.index }}">
+        <div class="course-card">
+          <img src="{{ course.image_url }}" alt="{{ course.title }}" class="course-img">
+          <div class="card-body">
+            <span class="course-duration"><i class="bi bi-clock"></i> {{ course.duration }}</span>
+            <h5>{{ course.title }}</h5>
+            <p>{{ course.short_description }}</p>
+          </div>
+          <div class="card-footer-custom">
+            <a href="{{ url_for('main.course_detail', slug=course.slug) }}" class="btn btn-outline-custom btn-sm w-100">View Details</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center fade-in">
+      <p class="text-muted mb-0">New courses coming soon. Check back later!</p>
+    </div>
+    {% endif %}
+    <div class="text-center mt-5 fade-in">
+      <a href="{{ url_for('main.courses') }}" class="btn btn-primary-custom">Browse All Courses <i class="bi bi-arrow-right ms-1"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- Why Choose Us -->
+<section class="section-padding bg-gradient-soft" id="why-us">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-5 mb-4 mb-lg-0 fade-in-left">
+        <span class="section-badge">Why Choose Us</span>
+        <h2 class="section-title text-start">Your Trusted Partner in <span class="text-gradient">Innovation</span></h2>
+        <p class="text-muted">We combine technical expertise with a passion for teaching to deliver exceptional results for businesses and learners alike.</p>
+        <a href="{{ url_for('main.about') }}" class="btn btn-primary-custom mt-2">Learn More About Us</a>
+      </div>
+      <div class="col-lg-7 fade-in-right">
+        <div class="feature-item">
+          <div class="feature-icon"><i class="bi bi-award"></i></div>
+          <div>
+            <h6 class="mb-1">Industry Expert Trainers</h6>
+            <p class="text-muted mb-0 small">Learn from professionals with real-world experience at top tech companies.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon"><i class="bi bi-laptop"></i></div>
+          <div>
+            <h6 class="mb-1">Hands-On Learning</h6>
+            <p class="text-muted mb-0 small">Project-based curriculum with live coding sessions and real client projects.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon"><i class="bi bi-briefcase"></i></div>
+          <div>
+            <h6 class="mb-1">Placement Support</h6>
+            <p class="text-muted mb-0 small">Dedicated career services with interview prep and partner company referrals.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon"><i class="bi bi-shield-check"></i></div>
+          <div>
+            <h6 class="mb-1">Quality Assurance</h6>
+            <p class="text-muted mb-0 small">Rigorous testing and best practices ensure reliable, scalable solutions.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section-padding" id="testimonials">
+  <div class="container">
+    <div class="section-header fade-in">
+      <span class="section-badge">Testimonials</span>
+      <h2 class="section-title">What Our <span class="text-gradient">Clients Say</span></h2>
+      <p class="section-subtitle">Hear from businesses and students who have partnered with MLK Tech.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4 fade-in delay-1">
+        <div class="testimonial-card">
+          <i class="bi bi-quote quote-icon"></i>
+          <div class="stars">
+            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+          </div>
+          <p>"MLK Tech transformed our online presence with a stunning website and robust backend. Their team was professional, responsive, and delivered ahead of schedule."</p>
+          <div class="testimonial-author">
+            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt="Rajesh Kumar">
+            <div class="author-info">
+              <h6>Rajesh Kumar</h6>
+              <span>CEO, TechVentures</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 fade-in delay-2">
+        <div class="testimonial-card">
+          <i class="bi bi-quote quote-icon"></i>
+          <div class="stars">
+            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+          </div>
+          <p>"The Full Stack Development course was a game-changer for my career. Within three months of completing the program, I landed my dream job as a software developer."</p>
+          <div class="testimonial-author">
+            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Priya Sharma">
+            <div class="author-info">
+              <h6>Priya Sharma</h6>
+              <span>Software Developer</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-4 fade-in delay-3">
+        <div class="testimonial-card">
+          <i class="bi bi-quote quote-icon"></i>
+          <div class="stars">
+            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-half"></i>
+          </div>
+          <p>"Their AI/ML solution automated our data processing pipeline, saving us 40 hours per week. MLK Tech truly understands enterprise technology needs."</p>
+          <div class="testimonial-author">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Arun Menon">
+            <div class="author-info">
+              <h6>Arun Menon</h6>
+              <span>CTO, DataFlow Inc.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact CTA -->
+<section class="section-padding bg-light-custom">
+  <div class="container">
+    <div class="cta-section fade-in">
+      <h2 class="mb-3">Ready to Start Your Journey?</h2>
+      <p class="mb-4 mx-auto" style="max-width: 500px;">Whether you need a technology partner or want to upskill, MLK Tech is here to help you succeed.</p>
+      <div class="d-flex flex-wrap justify-content-center gap-3">
+        <a href="{{ url_for('main.contact') }}" class="btn btn-cta-white">Contact Us Today</a>
+        <a href="{{ url_for('main.courses') }}" class="btn btn-cta-outline">Explore Courses</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

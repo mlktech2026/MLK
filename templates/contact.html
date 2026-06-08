@@ -1,0 +1,163 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us | MLK Tech{% endblock %}
+
+{% block meta %}
+<meta name="description" content="Contact MLK Tech - Get in touch for technology solutions, course enquiries, and business partnerships.">
+<meta name="keywords" content="contact MLK Tech, IT company Chennai, course enquiry, tech support">
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <h1 class="fade-in">Contact <span class="text-gradient">Us</span></h1>
+    <ul class="breadcrumb-custom fade-in delay-1">
+      <li><a href="{{ url_for('main.index') }}">Home</a></li>
+      <li>Contact</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="section-padding">
+  <div class="container">
+    <div class="row g-5">
+
+      <!-- Contact Info -->
+      <div class="col-lg-5 fade-in-left">
+        <div class="contact-info-card">
+          <h4 class="mb-4">Get in Touch</h4>
+          <p class="text-muted mb-4">Have a question or want to work together? We'd love to hear from you. Reach out through any of the channels below.</p>
+
+          <div class="contact-info-item">
+            <div class="info-icon"><i class="bi bi-geo-alt-fill"></i></div>
+            <div>
+              <h6>Our Address</h6>
+              <p>123 Tech Park, Tidel Park Avenue,<br>Tharamani, Chennai - 600113,<br>Tamil Nadu, India</p>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <div class="info-icon"><i class="bi bi-telephone-fill"></i></div>
+            <div>
+              <h6>Phone Number</h6>
+              <p><a href="tel:+919876543210">+91 98765 43210</a></p>
+              <p><a href="tel:+914412345678">+91 44 1234 5678</a></p>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <div class="info-icon"><i class="bi bi-envelope-fill"></i></div>
+            <div>
+              <h6>Email Address</h6>
+              <p><a href="mailto:info@mlktech.com">info@mlktech.com</a></p>
+              <p><a href="mailto:support@mlktech.com">support@mlktech.com</a></p>
+            </div>
+          </div>
+
+          <div class="contact-info-item">
+            <div class="info-icon"><i class="bi bi-clock-fill"></i></div>
+            <div>
+              <h6>Working Hours</h6>
+              <p>Monday - Saturday: 9:00 AM - 7:00 PM<br>Sunday: Closed</p>
+            </div>
+          </div>
+
+          <div class="social-links">
+            <a href="#" aria-label="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="#" aria-label="Twitter"><i class="bi bi-twitter-x"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="bi bi-linkedin"></i></a>
+            <a href="#" aria-label="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="#" aria-label="YouTube"><i class="bi bi-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="col-lg-7 fade-in-right">
+        <div class="card-custom" style="padding: 36px;">
+          <h4 class="mb-1">Send Us a Message</h4>
+          <p class="text-muted small mb-4">Fill out the form below and we'll respond within 24 hours.</p>
+
+          <form method="POST" action="{{ url_for('main.contact') }}" id="contactForm" novalidate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="contactName" class="form-label-custom">Full Name *</label>
+                <input type="text" class="form-control form-control-custom" id="contactName" name="name" placeholder="Enter your name" required>
+              </div>
+              <div class="col-md-6">
+                <label for="contactEmail" class="form-label-custom">Email Address *</label>
+                <input type="email" class="form-control form-control-custom" id="contactEmail" name="email" placeholder="your@email.com" required>
+              </div>
+              <div class="col-md-6">
+                <label for="contactPhone" class="form-label-custom">Phone Number *</label>
+                <input type="tel" class="form-control form-control-custom" id="contactPhone" name="phone" placeholder="+91 98765 43210" required>
+              </div>
+              <div class="col-md-6">
+                <label for="contactSubject" class="form-label-custom">Subject *</label>
+                <input type="text" class="form-control form-control-custom" id="contactSubject" name="subject" placeholder="How can we help?" required>
+              </div>
+              <div class="col-12">
+                <label for="contactMessage" class="form-label-custom">Message *</label>
+                <textarea class="form-control form-control-custom" id="contactMessage" name="message" rows="5" placeholder="Write your message here..." required></textarea>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary-custom">
+                  <i class="bi bi-send me-2"></i>Send Message
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Google Map -->
+<section class="section-padding pt-0">
+  <div class="container fade-in">
+    <h4 class="mb-4 text-center">Find Us on the Map</h4>
+    <div class="map-container">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.0136748699997!2d80.2481!3d12.9858!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525d2070d399e1%3A0x96725a62ca0f331d!2sTidel%20Park%2C%20Chennai!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+        allowfullscreen=""
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        title="MLK Tech office location on Google Maps">
+      </iframe>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+  var form = document.getElementById('contactForm');
+  if (!form) return;
+  var newForm = form.cloneNode(true);
+  form.parentNode.replaceChild(newForm, form);
+  newForm.addEventListener('submit', function (e) {
+    var name = newForm.querySelector('[name="name"]');
+    var email = newForm.querySelector('[name="email"]');
+    var phone = newForm.querySelector('[name="phone"]');
+    var subject = newForm.querySelector('[name="subject"]');
+    var message = newForm.querySelector('[name="message"]');
+    var valid = true;
+    if (!name || name.value.trim().length < 2) valid = false;
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) valid = false;
+    if (!phone || !/^[+]?[\d\s\-()]{7,15}$/.test(phone.value.trim())) valid = false;
+    if (!subject || !subject.value.trim()) valid = false;
+    if (!message || message.value.trim().length < 10) valid = false;
+    [name, email, phone, subject, message].forEach(function (el) {
+      if (el) el.classList.toggle('is-invalid', !valid);
+    });
+    if (!valid) e.preventDefault();
+  });
+})();
+</script>
+{% endblock %}

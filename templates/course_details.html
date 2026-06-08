@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block title %}{{ course.title }} | MLK Tech{% endblock %}
+
+{% block meta %}
+<meta name="description" content="{{ course.short_description }}">
+<meta name="keywords" content="{{ course.title }}, MLK Tech course, IT training">
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <h1 class="fade-in">{{ course.title }}</h1>
+    <ul class="breadcrumb-custom fade-in delay-1">
+      <li><a href="{{ url_for('main.index') }}">Home</a></li>
+      <li><a href="{{ url_for('main.courses') }}">Courses</a></li>
+      <li>{{ course.title }}</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Course Details -->
+<section class="section-padding">
+  <div class="container">
+    <div class="row g-5">
+
+      <!-- Main Content -->
+      <div class="col-lg-8">
+        <img src="{{ course.image_url }}" alt="{{ course.title }}" class="course-banner fade-in">
+
+        <h2 class="mt-4 fade-in">{{ course.title }}</h2>
+
+        <div class="course-meta fade-in delay-1">
+          <div class="course-meta-item">
+            <i class="bi bi-clock"></i>
+            <span>{{ course.duration }}</span>
+          </div>
+          <div class="course-meta-item">
+            <i class="bi bi-laptop"></i>
+            <span>{{ course.mode }}</span>
+          </div>
+          <div class="course-meta-item">
+            <i class="bi bi-currency-rupee"></i>
+            <span>{{ course.fees }}</span>
+          </div>
+        </div>
+
+        <div class="fade-in delay-2">
+          <h4 class="mb-3">Course Overview</h4>
+          <p class="text-muted">{{ course.full_description }}</p>
+        </div>
+
+        {% set modules = course.get_modules() %}
+        {% if modules %}
+        <div class="mt-5 fade-in delay-3">
+          <h4 class="mb-4">Syllabus & Modules</h4>
+          <div id="syllabusList">
+            {% for module in modules %}
+            <div class="syllabus-item d-flex align-items-start gap-3 fade-in">
+              <div class="module-number">{{ loop.index }}</div>
+              <div>
+                <h6 class="mb-1">{{ module.title }}</h6>
+                <p class="text-muted mb-0 small">{{ module.description }}</p>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        {% set benefits = course.get_benefits() %}
+        {% if benefits %}
+        <div class="mt-5 fade-in">
+          <h4 class="mb-4">What You'll Gain</h4>
+          <div id="benefitsList">
+            {% for benefit in benefits %}
+            <div class="benefit-item">
+              <i class="bi bi-check-circle-fill"></i>
+              <span>{{ benefit }}</span>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Sidebar - Enquiry Form -->
+      <div class="col-lg-4">
+        <div class="enquiry-form-card fade-in-right">
+          <h4 class="mb-1">Enquire Now</h4>
+          <p class="text-muted small mb-4">Fill out the form below and we'll get back to you within 24 hours.</p>
+
+          <form method="POST" action="{{ url_for('main.course_detail', slug=course.slug) }}" id="enquiryForm" novalidate>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <div class="mb-3">
+              <label for="enquiryName" class="form-label-custom">Full Name *</label>
+              <input type="text" class="form-control form-control-custom" id="enquiryName" name="name" placeholder="Enter your name" required>
+            </div>
+            <div class="mb-3">
+              <label for="enquiryEmail" class="form-label-custom">Email Address *</label>
+              <input type="email" class="form-control form-control-custom" id="enquiryEmail" name="email" placeholder="your@email.com" required>
+            </div>
+            <div class="mb-3">
+              <label for="enquiryPhone" class="form-label-custom">Phone Number *</label>
+              <input type="tel" class="form-control form-control-custom" id="enquiryPhone" name="phone" placeholder="+91 98765 43210" required>
+            </div>
+            <div class="mb-3">
+              <label for="enquiryCourse" class="form-label-custom">Course Name *</label>
+              <input type="text" class="form-control form-control-custom" id="enquiryCourse" name="course_name" value="{{ course.title }}" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="enquiryMessage" class="form-label-custom">Message *</label>
+              <textarea class="form-control form-control-custom" id="enquiryMessage" name="message" rows="4" placeholder="Tell us about your goals or any questions..." required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary-custom w-100">
+              <i class="bi bi-send me-2"></i>Submit Enquiry
+            </button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function () {
+  var form = document.getElementById('enquiryForm');
+  if (!form) return;
+  var newForm = form.cloneNode(true);
+  form.parentNode.replaceChild(newForm, form);
+  newForm.addEventListener('submit', function (e) {
+    var fields = [
+      { el: newForm.querySelector('[name="name"]'), min: 2 },
+      { el: newForm.querySelector('[name="email"]'), email: true },
+      { el: newForm.querySelector('[name="phone"]'), phone: true },
+      { el: newForm.querySelector('[name="message"]'), min: 10 }
+    ];
+    var valid = true;
+    fields.forEach(function (f) {
+      if (!f.el) return;
+      var v = f.el.value.trim();
+      if (f.min && v.length < f.min) valid = false;
+      if (f.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) valid = false;
+      if (f.phone && !/^[+]?[\d\s\-()]{7,15}$/.test(v)) valid = false;
+      f.el.classList.toggle('is-invalid', !valid);
+    });
+    if (!valid) e.preventDefault();
+  });
+})();
+</script>
+{% endblock %}

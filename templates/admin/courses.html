@@ -1,0 +1,73 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Courses{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2">
+  <h2 class="mb-0">Courses</h2>
+  <a href="{{ url_for('admin.add_course') }}" class="btn btn-primary">
+    <i class="bi bi-plus-lg me-1"></i>Add Course
+  </a>
+</div>
+
+<form method="GET" action="{{ url_for('admin.courses') }}" class="mb-4">
+  <div class="input-group" style="max-width: 400px;">
+    <input type="text" class="form-control" name="search" value="{{ search }}" placeholder="Search by title...">
+    <button type="submit" class="btn btn-outline-primary"><i class="bi bi-search"></i></button>
+    {% if search %}
+    <a href="{{ url_for('admin.courses') }}" class="btn btn-outline-secondary">Clear</a>
+    {% endif %}
+  </div>
+</form>
+
+<div class="admin-table">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Duration</th>
+          <th>Fees</th>
+          <th>Status</th>
+          <th>Date</th>
+          <th width="140">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for course in courses %}
+        <tr>
+          <td>{{ course.title }}</td>
+          <td><span class="badge bg-light text-dark">{{ course.category }}</span></td>
+          <td>{{ course.duration }}</td>
+          <td>{{ course.fees }}</td>
+          <td>
+            {% if course.is_published %}
+            <span class="badge bg-success">Published</span>
+            {% else %}
+            <span class="badge bg-secondary">Draft</span>
+            {% endif %}
+          </td>
+          <td class="text-muted small">{{ course.created_at.strftime('%b %d, %Y') }}</td>
+          <td>
+            <a href="{{ url_for('admin.edit_course', course_id=course.id) }}" class="btn btn-sm btn-outline-primary" title="Edit">
+              <i class="bi bi-pencil"></i>
+            </a>
+            <form method="POST" action="{{ url_for('admin.delete_course', course_id=course.id) }}" class="d-inline" onsubmit="return confirm('Delete this course?');">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+              <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
+                <i class="bi bi-trash"></i>
+              </button>
+            </form>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="7" class="text-muted text-center py-5">No courses found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

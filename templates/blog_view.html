@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% block title %}{{ blog.meta_title or blog.title }} | MLK Tech{% endblock %}
+
+{% block meta %}
+<meta name="description" content="{{ blog.meta_description or blog.excerpt }}">
+{% if blog.meta_keywords %}<meta name="keywords" content="{{ blog.meta_keywords }}">{% endif %}
+<meta name="author" content="{{ blog.author }}">
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <h1 class="fade-in">{{ blog.title }}</h1>
+    <ul class="breadcrumb-custom fade-in delay-1">
+      <li><a href="{{ url_for('main.index') }}">Home</a></li>
+      <li><a href="{{ url_for('main.blog_list') }}">Blog</a></li>
+      <li>{{ blog.title }}</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Blog Detail -->
+<section class="section-padding">
+  <div class="container">
+    <div class="row g-5">
+
+      <!-- Main Content -->
+      <div class="col-lg-8">
+        <img src="{{ blog.image_url }}" alt="{{ blog.title }}" class="blog-detail-banner fade-in">
+
+        <h2 class="mt-4 fade-in">{{ blog.title }}</h2>
+
+        <div class="blog-detail-meta fade-in delay-1">
+          <div class="meta-item">
+            <i class="bi bi-person-circle"></i>
+            <span>{{ blog.author }}</span>
+          </div>
+          <div class="meta-item">
+            <i class="bi bi-calendar3"></i>
+            <span>{{ blog.formatted_date }}</span>
+          </div>
+          <div class="meta-item">
+            <i class="bi bi-tag"></i>
+            <span class="blog-category">{{ blog.category }}</span>
+          </div>
+        </div>
+
+        <div class="blog-content fade-in delay-2">
+          {{ blog.content | safe }}
+        </div>
+
+        <!-- Share Buttons -->
+        {% set share_url = url_for('main.blog_view', slug=blog.slug, _external=True) %}
+        <div class="share-section fade-in">
+          <h6><i class="bi bi-share me-2"></i>Share This Article</h6>
+          <div class="share-buttons">
+            <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | urlencode }}" class="share-btn facebook" aria-label="Share on Facebook" target="_blank" rel="noopener">
+              <i class="bi bi-facebook"></i>
+            </a>
+            <a href="https://twitter.com/intent/tweet?url={{ share_url | urlencode }}&text={{ blog.title | urlencode }}" class="share-btn twitter" aria-label="Share on Twitter" target="_blank" rel="noopener">
+              <i class="bi bi-twitter-x"></i>
+            </a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url | urlencode }}" class="share-btn linkedin" aria-label="Share on LinkedIn" target="_blank" rel="noopener">
+              <i class="bi bi-linkedin"></i>
+            </a>
+            <a href="https://api.whatsapp.com/send?text={{ blog.title | urlencode }}%20{{ share_url | urlencode }}" class="share-btn whatsapp" aria-label="Share on WhatsApp" target="_blank" rel="noopener">
+              <i class="bi bi-whatsapp"></i>
+            </a>
+            <button class="share-btn copy-link" aria-label="Copy link" id="copyLinkBtn" title="Copy link">
+              <i class="bi bi-link-45deg"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Comment Form -->
+        <div class="comment-form-card fade-in">
+          <h4><i class="bi bi-chat-left-text me-2"></i>Leave a Comment</h4>
+
+          <div class="form-success mb-3" id="commentSuccess" style="display: none;">
+            <i class="bi bi-check-circle-fill me-2"></i>
+            Thank you! Your comment has been submitted successfully.
+          </div>
+
+          <form id="commentForm" novalidate>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="commentName" class="form-label-custom">Name *</label>
+                <input type="text" class="form-control form-control-custom" id="commentName" placeholder="Your name">
+              </div>
+              <div class="col-md-6">
+                <label for="commentEmail" class="form-label-custom">Email *</label>
+                <input type="email" class="form-control form-control-custom" id="commentEmail" placeholder="your@email.com">
+              </div>
+              <div class="col-12">
+                <label for="commentText" class="form-label-custom">Comment *</label>
+                <textarea class="form-control form-control-custom" id="commentText" rows="5" placeholder="Share your thoughts..."></textarea>
+              </div>
+              <div class="col-12">
+                <button type="submit" class="btn btn-primary-custom">
+                  <i class="bi bi-send me-2"></i>Post Comment
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        {% if recent_blogs %}
+        <div class="blog-sidebar-card fade-in-right">
+          <h5><i class="bi bi-clock-history me-2"></i>Recent Articles</h5>
+          <div id="recentBlogs">
+            {% for recent in recent_blogs %}
+            <div class="recent-blog-item">
+              <img src="{{ recent.image_url }}" alt="{{ recent.title }}">
+              <div>
+                <h6><a href="{{ url_for('main.blog_view', slug=recent.slug) }}">{{ recent.title }}</a></h6>
+                <span class="recent-date"><i class="bi bi-calendar3"></i> {{ recent.formatted_date }}</span>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="blog-sidebar-card fade-in-right delay-1">
+          <h5><i class="bi bi-mortarboard me-2"></i>Learn With Us</h5>
+          <p class="text-muted small">Turn insights into skills with our industry-aligned courses.</p>
+          <a href="{{ url_for('main.courses') }}" class="btn btn-primary-custom btn-sm w-100 mb-2">Browse Courses</a>
+          <a href="{{ url_for('main.contact') }}" class="btn btn-outline-custom btn-sm w-100">Contact Us</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Related Blogs -->
+{% if related_blogs %}
+<section class="section-padding bg-light-custom related-section">
+  <div class="container">
+    <div class="section-header fade-in">
+      <span class="section-badge">Related Articles</span>
+      <h2 class="section-title">You May Also <span class="text-gradient">Like</span></h2>
+    </div>
+    <div class="row g-4" id="relatedBlogs">
+      {% for related in related_blogs %}
+      <div class="col-md-4 fade-in">
+        <article class="related-blog-card">
+          <img src="{{ related.image_url }}" alt="{{ related.title }}">
+          <div class="card-body">
+            <span class="blog-category mb-2 d-inline-block">{{ related.category }}</span>
+            <h6><a href="{{ url_for('main.blog_view', slug=related.slug) }}" class="text-decoration-none text-dark">{{ related.title }}</a></h6>
+            <span class="recent-date"><i class="bi bi-calendar3"></i> {{ related.formatted_date }}</span>
+          </div>
+        </article>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

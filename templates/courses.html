@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}Our Courses | MLK Tech{% endblock %}
+
+{% block meta %}
+<meta name="description" content="Explore MLK Tech professional IT courses - Web Development, AI/ML, Data Science, Mobile Apps, Cloud Computing, and more.">
+<meta name="keywords" content="IT courses, web development course, AI ML training, data science, cloud computing, cybersecurity">
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <h1 class="fade-in">Our <span class="text-gradient">Courses</span></h1>
+    <ul class="breadcrumb-custom fade-in delay-1">
+      <li><a href="{{ url_for('main.index') }}">Home</a></li>
+      <li>Courses</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Courses Section -->
+<section class="section-padding">
+  <div class="container">
+
+    <!-- Search & Filter Bar -->
+    <form method="GET" action="{{ url_for('main.courses') }}" class="filter-bar fade-in">
+      <div class="row g-3 align-items-end">
+        <div class="col-md-5">
+          <label for="courseSearch" class="form-label-custom">Search Courses</label>
+          <div class="input-group">
+            <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+            <input type="text" class="form-control border-start-0" id="courseSearch" name="search" value="{{ search }}" placeholder="Search by course name or keyword...">
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label for="courseCategory" class="form-label-custom">Category</label>
+          <select class="form-select" id="courseCategory" name="category">
+            <option value="all" {% if category == 'all' %}selected{% endif %}>All Categories</option>
+            {% for key, label in course_categories.items() %}
+            <option value="{{ key }}" {% if category == key %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-3">
+          <label for="courseDuration" class="form-label-custom">Duration</label>
+          <select class="form-select" id="courseDuration" name="duration">
+            <option value="all" {% if duration == 'all' %}selected{% endif %}>All Durations</option>
+            <option value="short" {% if duration == 'short' %}selected{% endif %}>Up to 4 Months</option>
+            <option value="medium" {% if duration == 'medium' %}selected{% endif %}>5-6 Months</option>
+            <option value="long" {% if duration == 'long' %}selected{% endif %}>7+ Months</option>
+          </select>
+        </div>
+        <div class="col-md-1">
+          <button type="submit" class="btn btn-primary-custom w-100" title="Apply filters"><i class="bi bi-funnel"></i></button>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-12">
+          <span class="badge bg-primary bg-opacity-10 text-primary p-2" id="courseCount">
+            {{ pagination.total }} {{ 'Course' if pagination.total == 1 else 'Courses' }}
+          </span>
+        </div>
+      </div>
+    </form>
+
+    <!-- Course Grid -->
+    {% if courses %}
+    <div class="row g-4 mt-2" id="courseGrid">
+      {% for course in courses %}
+      <div class="col-md-6 col-lg-4 course-card-wrapper fade-in delay-{{ (loop.index0 % 3) + 1 }}"
+           data-title="{{ course.title }}"
+           data-category="{{ course.category }}"
+           data-duration="{{ course.duration_group }}"
+           data-description="{{ course.short_description }}">
+        <div class="course-card">
+          <img src="{{ course.image_url }}" alt="{{ course.title }}" class="course-img">
+          <div class="card-body">
+            <span class="course-duration"><i class="bi bi-clock"></i> {{ course.duration }}</span>
+            <h5>{{ course.title }}</h5>
+            <p>{{ course.short_description }}</p>
+          </div>
+          <div class="card-footer-custom">
+            <a href="{{ url_for('main.course_detail', slug=course.slug) }}" class="btn btn-outline-custom btn-sm w-100">View Details</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-results mt-4" id="noResults">
+      <i class="bi bi-search"></i>
+      <h5>No courses found</h5>
+      <p>Try adjusting your search or filter criteria.</p>
+    </div>
+    {% endif %}
+
+    <!-- Pagination -->
+    {% if pagination.pages > 1 %}
+    <nav aria-label="Course pagination">
+      <div class="blog-pagination">
+        {% if pagination.has_prev %}
+        <a href="{{ url_for('main.courses', page=pagination.prev_num, search=search, category=category, duration=duration) }}" class="page-btn nav-btn"><i class="bi bi-chevron-left"></i> Prev</a>
+        {% else %}
+        <span class="page-btn nav-btn disabled"><i class="bi bi-chevron-left"></i> Prev</span>
+        {% endif %}
+
+        {% for p in pagination.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+          {% if p %}
+            <a href="{{ url_for('main.courses', page=p, search=search, category=category, duration=duration) }}" class="page-btn {% if p == pagination.page %}active{% endif %}">{{ p }}</a>
+          {% else %}
+            <span class="page-btn disabled">...</span>
+          {% endif %}
+        {% endfor %}
+
+        {% if pagination.has_next %}
+        <a href="{{ url_for('main.courses', page=pagination.next_num, search=search, category=category, duration=duration) }}" class="page-btn nav-btn">Next <i class="bi bi-chevron-right"></i></a>
+        {% else %}
+        <span class="page-btn nav-btn disabled">Next <i class="bi bi-chevron-right"></i></span>
+        {% endif %}
+      </div>
+    </nav>
+    {% endif %}
+
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-padding bg-light-custom">
+  <div class="container">
+    <div class="cta-section fade-in">
+      <h2 class="mb-3">Not Sure Which Course to Choose?</h2>
+      <p class="mb-4">Our counselors are here to help you find the perfect program for your career goals.</p>
+      <a href="{{ url_for('main.contact') }}" class="btn btn-cta-white">Talk to a Counselor</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

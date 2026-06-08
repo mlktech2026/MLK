@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+
+{% block title %}Our Services | MLK Tech{% endblock %}
+
+{% block meta %}
+<meta name="description" content="MLK Tech services - Web development, mobile apps, AI/ML solutions, digital marketing, cloud solutions, and IT consulting.">
+<meta name="keywords" content="web development, mobile app development, AI ML, cloud solutions, IT consulting, digital marketing">
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <h1 class="fade-in">Our <span class="text-gradient">Services</span></h1>
+    <ul class="breadcrumb-custom fade-in delay-1">
+      <li><a href="{{ url_for('main.index') }}">Home</a></li>
+      <li>Services</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Services Intro -->
+<section class="section-padding-sm">
+  <div class="container">
+    <div class="section-header fade-in">
+      <p class="section-subtitle">From concept to deployment, we provide comprehensive technology services that help your business stay ahead of the competition.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Services Grid -->
+<section class="section-padding pt-0">
+  <div class="container">
+    <div class="row g-4">
+
+      <div class="col-md-6 col-lg-4 fade-in delay-1">
+        <div class="service-card">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=500&q=80" class="card-img-top" alt="Web Development">
+          <div class="card-body">
+            <div class="service-icon"><i class="bi bi-code-slash"></i></div>
+            <h5>Web Development</h5>
+            <p class="text-muted">We build responsive, high-performance websites and web applications using React, Angular, Vue.js, and Node.js. From corporate websites to complex SaaS platforms.</p>
+            <ul class="list-unstyled small text-muted">
+              <li><i class="bi bi-check2 text-primary me-1"></i> Custom Web Applications</li>
+              <li><i class="bi bi-check2 text-primary me-1"></i> E-Commerce Solutions</li>
+              <li><i class="bi bi-check2 text-primary me-1"></i> CMS Development</li>
+              <li><i class="bi bi-check2 text-primary me-1"></i> API Integration</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 fade-in delay-2">
+        <div class="service-card">
+          <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=500&q=80" class="card-img-top" alt="Mobile App Development">
+          <div class="card-body">
+            <div class="service-icon"><i class="bi bi-phone"></i></div>
+            <h5>Mobile App Development</h5>
+            <p class="text-muted">Create stunning mobile experiences with React Native, Flutter, and native iOS/Android development. We deliver apps that users love.</p>
+            <ul class="list-unstyled small text-muted">
+              <li><i class="bi bi-check2 text-primary me-1"></i> iOS & Android Apps</li>
+              <li><i class="bi bi-check2 text-primary me-1"></i> Cross-Platform Development</li>
+              <li><i class="bi bi-check2 text-primary me-1"></i> UI/UX Design</li>
+              <li><i class="bi bi-check2 text-primary me-1"></i> App Store Deployment</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 fade-in delay-3">
+        <div class="service-card">
+          <img src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=500&q=80" class="card-img-top" alt="AI and ML Solutions">
+          <div class="card-body">
+            <div class="service-icon"><i class="bi bi-robot"></i></div>
+            <h5>AI & ML Solutions</h5>
+            <p class="text-muted">Harness the power of artificial intelligence to automate processes, gain insights, and build intelligent products that give you a competitive edge.</p>
+            <ul class="list-unstyled small text-muted">
+              <li><i class="bi bi-check2 text-primary me-1"></i> Predictive Analytics</li>
+              <li><i class="bi bi-check2 text-primary me-1"></i> Natural Language Processing</li>
+              <li><i class="bi bi-check2 text-primary me-1"></i> Computer Vision</li>
+              <li><i class="bi bi-check2 text-primary me-1"></i> Process Automation</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 fade-in delay-1">
+        <div class="service-card">
+          <img src="https://images.unsplash.com/photo-1432888622747-4eb9a8f2c293?w=500&q=80" class="card-img-top" alt="Digital Marketing">
+          <div class="card-body">
+            <div class="service-icon"><i class="bi bi-megaphone"></i></div>
+            <h5>Digital Marketing</h5>
+            <p class="text-muted">Grow your online presence with data-driven digital marketing strategies. We help you reach the right audience and convert leads into customers.</p>
+            <ul class="list-unstyled small text-muted">
+              <li><i class="bi bi-check2 text-primary me-1"></i> SEO Optimization</li>
+              <li><i class="bi bi-check2 text-primary me-1"></i> Social Media Marketing</li>
+              <li><i class="bi bi-check2 text-primary me-1"></i> Google & Facebook Ads</li>
+              <li><i class="bi bi-check2 text-primary me-1"></i> Content Strategy</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 fade-in delay-2">
+        <div class="service-card">
+          <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=500&q=80" class="card-img-top" alt="Cloud Solutions">
+          <div class="card-body">
+            <div class="service-icon"><i class="bi bi-cloud"></i></div>
+            <h5>Cloud Solutions</h5>
+            <p class="text-muted">Migrate, manage, and optimize your infrastructure on AWS, Azure, and Google Cloud. We ensure scalability, security, and cost efficiency.</p>
+            <ul class="list-unstyled small text-muted">
+              <li><i class="bi bi-check2 text-primary me-1"></i> Cloud Migration</li>
+              <li><i class="bi bi-check2 text-primary me-1"></i> DevOps & CI/CD</li>
+              <li><i class="bi bi-check2 text-primary me-1"></i> Infrastructure as Code</li>
+              <li><i class="bi bi-check2 text-primary me-1"></i> Cloud Security</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6 col-lg-4 fade-in delay-3">
+        <div class="service-card">
+          <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500&q=80" class="card-img-top" alt="IT Consulting">
+          <div class="card-body">
+            <div class="service-icon"><i class="bi bi-headset"></i></div>
+            <h5>IT Consulting</h5>
+            <p class="text-muted">Strategic technology consulting to help you make informed decisions. We assess your needs and recommend the best solutions for your business goals.</p>
+            <ul class="list-unstyled small text-muted">
+              <li><i class="bi bi-check2 text-primary me-1"></i> Technology Assessment</li>
+              <li><i class="bi bi-check2 text-primary me-1"></i> Digital Transformation</li>
+              <li><i class="bi bi-check2 text-primary me-1"></i> System Architecture</li>
+              <li><i class="bi bi-check2 text-primary me-1"></i> Project Management</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Process Section -->
+<section class="section-padding bg-light-custom">
+  <div class="container">
+    <div class="section-header fade-in">
+      <span class="section-badge">Our Process</span>
+      <h2 class="section-title">How We <span class="text-gradient">Work</span></h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3 fade-in delay-1">
+        <div class="card-custom text-center">
+          <div class="card-icon mx-auto"><i class="bi bi-chat-dots"></i></div>
+          <h5>1. Discovery</h5>
+          <p>We understand your goals, challenges, and requirements through detailed consultation.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 fade-in delay-2">
+        <div class="card-custom text-center">
+          <div class="card-icon mx-auto"><i class="bi bi-pencil-square"></i></div>
+          <h5>2. Planning</h5>
+          <p>We create a detailed roadmap with timelines, milestones, and technology stack.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 fade-in delay-3">
+        <div class="card-custom text-center">
+          <div class="card-icon mx-auto"><i class="bi bi-gear"></i></div>
+          <h5>3. Development</h5>
+          <p>Our team builds your solution using agile methodology with regular updates.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 fade-in delay-4">
+        <div class="card-custom text-center">
+          <div class="card-icon mx-auto"><i class="bi bi-rocket-takeoff"></i></div>
+          <h5>4. Launch & Support</h5>
+          <p>We deploy, test, and provide ongoing maintenance and support services.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-padding">
+  <div class="container">
+    <div class="cta-section fade-in">
+      <h2 class="mb-3">Need a Custom Solution?</h2>
+      <p class="mb-4">Let's discuss your project requirements and create something amazing together.</p>
+      <a href="{{ url_for('main.contact') }}" class="btn btn-cta-white">Request a Quote</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

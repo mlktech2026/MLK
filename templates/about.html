@@ -1,0 +1,227 @@
+{% extends "base.html" %}
+
+{% block title %}About Us | MLK Tech{% endblock %}
+
+{% block meta %}
+<meta name="description" content="Learn about MLK Tech - our mission, vision, values, team, and achievements in technology solutions and education.">
+<meta name="keywords" content="MLK Tech about, company mission, vision, team, IT company">
+{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="page-header">
+  <div class="container">
+    <h1 class="fade-in">About <span class="text-gradient">MLK Tech</span></h1>
+    <ul class="breadcrumb-custom fade-in delay-1">
+      <li><a href="{{ url_for('main.index') }}">Home</a></li>
+      <li>About Us</li>
+    </ul>
+  </div>
+</section>
+
+<!-- Company Introduction -->
+<section class="section-padding">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-6 fade-in-left">
+        <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&q=80" alt="MLK Tech office and team" class="about-image">
+      </div>
+      <div class="col-lg-6 fade-in-right">
+        <span class="section-badge">Who We Are</span>
+        <h2 class="section-title text-start">Building the Future of <span class="text-gradient">Technology</span></h2>
+        <p class="text-muted">Founded in 2018, MLK Tech has grown from a small startup into a leading technology company and training institute. We bridge the gap between industry needs and talent by delivering innovative software solutions and comprehensive IT education.</p>
+        <p class="text-muted">Our team of 50+ engineers, designers, and educators work collaboratively to help businesses digitize their operations and empower individuals with the skills needed to thrive in the tech industry.</p>
+        <div class="row g-3 mt-3">
+          <div class="col-6">
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-check-circle-fill text-primary"></i>
+              <span class="small fw-semibold">ISO Certified</span>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-check-circle-fill text-primary"></i>
+              <span class="small fw-semibold">8+ Years Experience</span>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-check-circle-fill text-primary"></i>
+              <span class="small fw-semibold">50+ Team Members</span>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="d-flex align-items-center gap-2">
+              <i class="bi bi-check-circle-fill text-primary"></i>
+              <span class="small fw-semibold">Global Clients</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Mission & Vision -->
+<section class="section-padding bg-light-custom">
+  <div class="container">
+    <div class="section-header fade-in">
+      <span class="section-badge">Our Purpose</span>
+      <h2 class="section-title">Mission & <span class="text-gradient">Vision</span></h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 fade-in delay-1">
+        <div class="mission-vision-card">
+          <div class="mv-icon"><i class="bi bi-bullseye"></i></div>
+          <h4>Our Mission</h4>
+          <p class="text-muted mb-0">To democratize technology education and deliver world-class software solutions that empower businesses to innovate, scale, and succeed in the digital economy. We strive to make quality tech education accessible to everyone.</p>
+        </div>
+      </div>
+      <div class="col-md-6 fade-in delay-2">
+        <div class="mission-vision-card">
+          <div class="mv-icon"><i class="bi bi-eye"></i></div>
+          <h4>Our Vision</h4>
+          <p class="text-muted mb-0">To become the most trusted technology partner and training institute in South Asia, recognized for excellence in innovation, education, and client success. We envision a world where technology creates equal opportunities for all.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Core Values -->
+<section class="section-padding">
+  <div class="container">
+    <div class="section-header fade-in">
+      <span class="section-badge">Our Values</span>
+      <h2 class="section-title">What <span class="text-gradient">Drives Us</span></h2>
+      <p class="section-subtitle">The principles that guide every decision we make and every project we deliver.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3 fade-in delay-1">
+        <div class="value-card">
+          <div class="value-icon"><i class="bi bi-lightbulb"></i></div>
+          <h5>Innovation</h5>
+          <p class="text-muted small mb-0">We embrace new technologies and creative thinking to solve complex challenges.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 fade-in delay-2">
+        <div class="value-card">
+          <div class="value-icon"><i class="bi bi-heart"></i></div>
+          <h5>Integrity</h5>
+          <p class="text-muted small mb-0">Honesty and transparency form the foundation of all our client relationships.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 fade-in delay-3">
+        <div class="value-card">
+          <div class="value-icon"><i class="bi bi-people"></i></div>
+          <h5>Collaboration</h5>
+          <p class="text-muted small mb-0">We believe in the power of teamwork, both within our company and with our clients.</p>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 fade-in delay-4">
+        <div class="value-card">
+          <div class="value-icon"><i class="bi bi-graph-up-arrow"></i></div>
+          <h5>Excellence</h5>
+          <p class="text-muted small mb-0">We pursue the highest standards in everything we build, teach, and deliver.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Team Section -->
+<section class="section-padding bg-gradient-soft">
+  <div class="container">
+    <div class="section-header fade-in">
+      <span class="section-badge">Our Team</span>
+      <h2 class="section-title">Meet the <span class="text-gradient">Leaders</span></h2>
+      <p class="section-subtitle">Passionate professionals dedicated to your success.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3 fade-in delay-1">
+        <div class="team-card">
+          <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80" alt="Mohan Kumar - CEO">
+          <div class="team-info">
+            <h5>Mohan Kumar</h5>
+            <span>CEO & Founder</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 fade-in delay-2">
+        <div class="team-card">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80" alt="Lakshmi Devi - CTO">
+          <div class="team-info">
+            <h5>Lakshmi Devi</h5>
+            <span>CTO</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 fade-in delay-3">
+        <div class="team-card">
+          <img src="https://images.unsplash.com/photo-1519081900723-ee35e4579f0f?w=400&q=80" alt="Karthik Rajan - Head of Training">
+          <div class="team-info">
+            <h5>Karthik Rajan</h5>
+            <span>Head of Training</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 col-lg-3 fade-in delay-4">
+        <div class="team-card">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80" alt="Anitha Suresh - Operations Director">
+          <div class="team-info">
+            <h5>Anitha Suresh</h5>
+            <span>Operations Director</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Achievements -->
+<section class="section-padding">
+  <div class="container">
+    <div class="section-header fade-in">
+      <span class="section-badge">Achievements</span>
+      <h2 class="section-title">Our <span class="text-gradient">Impact</span> in Numbers</h2>
+    </div>
+    <div class="row g-4">
+      <div class="col-6 col-md-3 fade-in delay-1">
+        <div class="achievement-item">
+          <div class="achievement-number">500+</div>
+          <p>Projects Completed</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 fade-in delay-2">
+        <div class="achievement-item">
+          <div class="achievement-number">2000+</div>
+          <p>Students Trained</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 fade-in delay-3">
+        <div class="achievement-item">
+          <div class="achievement-number">150+</div>
+          <p>Corporate Clients</p>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 fade-in delay-4">
+        <div class="achievement-item">
+          <div class="achievement-number">95%</div>
+          <p>Client Satisfaction</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section-padding bg-light-custom">
+  <div class="container">
+    <div class="cta-section fade-in">
+      <h2 class="mb-3">Want to Join Our Team?</h2>
+      <p class="mb-4">We're always looking for talented individuals who share our passion for technology and education.</p>
+      <a href="{{ url_for('main.contact') }}" class="btn btn-cta-white">Get in Touch</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

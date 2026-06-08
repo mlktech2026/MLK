@@ -1,0 +1,105 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h2 class="mb-0">Dashboard</h2>
+  <span class="text-muted">Welcome back, {{ current_user.username }}</span>
+</div>
+
+<div class="row g-4 mb-4">
+  <div class="col-md-6 col-lg-3">
+    <div class="admin-stat-card">
+      <h3>{{ stats.contacts }}</h3>
+      <p class="text-muted mb-0">Contact Messages</p>
+    </div>
+  </div>
+  <div class="col-md-6 col-lg-3">
+    <div class="admin-stat-card">
+      <h3>{{ stats.enquiries }}</h3>
+      <p class="text-muted mb-0">Course Enquiries</p>
+    </div>
+  </div>
+  <div class="col-md-6 col-lg-3">
+    <div class="admin-stat-card">
+      <h3>{{ stats.blogs }}</h3>
+      <p class="text-muted mb-0">Blog Posts</p>
+    </div>
+  </div>
+  <div class="col-md-6 col-lg-3">
+    <div class="admin-stat-card">
+      <h3>{{ stats.courses }}</h3>
+      <p class="text-muted mb-0">Courses</p>
+    </div>
+  </div>
+</div>
+
+<div class="row g-4">
+  <div class="col-lg-6">
+    <div class="admin-table">
+      <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Latest Contacts</h5>
+        <a href="{{ url_for('admin.contacts') }}" class="btn btn-sm btn-outline-primary">View All</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Subject</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for msg in latest_contacts %}
+            <tr>
+              <td>{{ msg.name }}</td>
+              <td>{{ msg.subject[:40] }}{% if msg.subject|length > 40 %}...{% endif %}</td>
+              <td class="text-muted small">{{ msg.created_at.strftime('%b %d, %Y') }}</td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="3" class="text-muted text-center py-4">No contact messages yet.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-6">
+    <div class="admin-table">
+      <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Latest Enquiries</h5>
+        <a href="{{ url_for('admin.enquiries') }}" class="btn btn-sm btn-outline-primary">View All</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover mb-0">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Course</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for enquiry in latest_enquiries %}
+            <tr>
+              <td>{{ enquiry.name }}</td>
+              <td>{{ enquiry.course_name[:30] }}{% if enquiry.course_name|length > 30 %}...{% endif %}</td>
+              <td class="text-muted small">{{ enquiry.created_at.strftime('%b %d, %Y') }}</td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="3" class="text-muted text-center py-4">No enquiries yet.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
